@@ -18,4 +18,12 @@ jobs:
         with:
           name: hiiii
           path: HelloWorldApp.java
-      
+  print:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get artifact
+            uses: actions/download-artifact@v3
+            with:
+              name: hiiii
+          - name: output
+            run: ls
