@@ -19,6 +19,7 @@ jobs:
           name: hiiii
           path: HelloWorldApp.java
   print:
+        needs: test
         runs-on: ubuntu-latest
         steps:
           - name: Get artifact
