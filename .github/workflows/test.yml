@@ -27,4 +27,4 @@ jobs:
             with:
               name: hiiii
           - name: output
-            run: ll
+            run: ls
