@@ -27,6 +27,4 @@ jobs:
             with:
               name: hiiii
           - name: output
-            run: |
-              ls
-              pwd
+            run: pwd
