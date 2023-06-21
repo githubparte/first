@@ -1,0 +1,8 @@
+name: Test Project
+on: push
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: printing
+        run: echo "Hello World!"
