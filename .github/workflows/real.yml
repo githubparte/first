@@ -10,4 +10,4 @@ jobs:
           echo "S3_OUT_ENDPOINT=localhost" >> $GITHUB_ENV
           echo "S3_OUT_PORT=9000" >> $GITHUB_ENV
           echo "S3_OUT_SECURE=false" >> $GITHUB_ENV
-          echo "$GITHUB_ENV"
+          cat $GITHUB_ENV
