@@ -30,11 +30,12 @@ jobs:
               values+=("c") # Add "c" if ccc is true
           fi
 
+          # Format the final string as values=["a", "b", "c"]
           printf -v joined '"%s", ' "${values[@]}"
           joined="${joined%, }"  # Remove the trailing comma and space
           result="values=[$joined]"  # Format the final string
 
-          echo "::set-output name=values::$joined"  # Set the output for the job
+          echo "::set-output name=values::$result"  # Set the output for the job
 
   print-values:
     runs-on: ubuntu-latest
