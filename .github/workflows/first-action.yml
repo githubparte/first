@@ -36,9 +36,17 @@ jobs:
 
           echo "::set-output name=values::$joined"  # Set the output for the job
 
-  use-values:
+  print-values:
     runs-on: ubuntu-latest
     needs: generate-values  # Wait for the previous job to finish
+    steps:
+      - name: Print Generated Values
+        run: |
+          echo "Generated values: ${{ needs.generate-values.outputs.values }}"
+
+  use-values:
+    runs-on: ubuntu-latest
+    needs: print-values  # Wait for the print-values job to finish
     strategy:
       matrix:
         value: ${{ fromJson(needs.generate-values.outputs.values) }}  # Parse the output as a matrix
