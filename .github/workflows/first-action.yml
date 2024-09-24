@@ -36,7 +36,7 @@ jobs:
           result="[$joined]"  # Format as a JSON array
 
           # Set the output for the job
-          echo "::set-output name=values::$result"
+          echo "values=$result" >> $GITHUB_ENV 
 
   print-values:
     runs-on: ubuntu-latest
