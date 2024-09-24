@@ -34,7 +34,7 @@ jobs:
 
           echo "::set-output name=values::$joined" 
   build:
-    needs: setup
+    needs: generate-values
     runs-on: ubuntu-latest
     strategy:
       matrix:
