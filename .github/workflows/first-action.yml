@@ -30,10 +30,10 @@ jobs:
               values+=("c") # Add "c" if ccc is true
           fi
 
-          # Format the final string as values=["a", "b", "c"]
+          # Format the final string as a JSON array
           printf -v joined '"%s", ' "${values[@]}"
           joined="${joined%, }"  # Remove the trailing comma and space
-          result="values=[$joined]"  # Format the final string
+          result="[$joined]"  # Format as a JSON array
 
           echo "::set-output name=values::$result"  # Set the output for the job
 
