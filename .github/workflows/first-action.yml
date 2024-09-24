@@ -1,10 +1,30 @@
-name: First Workflow
-on: workflow_dispatch
+name: Publish
+on:
+  push:
 jobs:
-  first-job:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.value }}
     steps:
-      - name: Print greeting
-        run: echo "Hello World!"
-      - name: Print goodbye
-        run: echo "Done - bye!"
+      - id: matrix
+        run: |
+          matrix_array=()
+          if [ true = true ]; then
+              matrix_array+=("a")
+          fi
+          if [ true = true ]; then
+              matrix_array+=("b")
+          fi
+          echo "value=$(printf '%s\n' "${matrix_array[@]}" | jq -R . | jq -s .)" >> $GITHUB_OUTPUT
+      - run: |
+          echo "${{ steps.matrix.outputs.value }}"
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{fromJSON(needs.setup.outputs.matrix)}}
+    steps:
+      - run: |
+          echo "${{ matrix.value }}"
