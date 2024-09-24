@@ -2,28 +2,37 @@ name: Publish
 on:
   push:
 jobs:
-  setup:
+  generate-values:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
+      values: ${{ steps.generate_values.outputs.values }}  # Output from this job
     steps:
-      - id: matrix
+      - name: Generate Values
+        id: generate_values
         run: |
-          matrix_array=()
-          if [ true = true ]; then
-              matrix_array+=("a")
+          aaa=true
+          bbb=true
+          ccc=true
+
+          # Initialize an empty array
+          values=()
+
+          # Check each variable and add to the array if true
+          if [ "$aaa" = true ]; then
+              values+=("a") # Add "a" if aaa is true
           fi
-          if [ true = true ]; then
-              matrix_array+=("b")
+          if [ "$bbb" = true ]; then
+              values+=("b") # Add "b" if bbb is true
           fi
-          if [ ${#matrix_array[@]} -gt 0 ]; then
-              json_array=$(printf '%s\n' "${matrix_array[@]}" | jq -R . | jq -s .)
-              echo "value=${json_array}" >> $GITHUB_OUTPUT
-          else
-              echo "value=[]" >> $GITHUB_OUTPUT
+          if [ "$ccc" = true ]; then
+              values+=("c") # Add "c" if ccc is true
           fi
-      - run: |
-          echo "${{ steps.matrix.outputs.value }}"
+
+          printf -v joined '"%s", ' "${values[@]}"
+          joined="${joined%, }"  # Remove the trailing comma and space
+          result="values=[$joined]"  # Format the final string
+
+          echo "::set-output name=values::$joined" 
   build:
     needs: setup
     runs-on: ubuntu-latest
